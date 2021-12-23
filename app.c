@@ -23,7 +23,7 @@
 		}\
 	}while(0)
 	
-bool nsfw = true;
+bool nsfw = false;
 int num_of_files = 0;
 
 char *getFilePath(){
@@ -32,8 +32,8 @@ char *getFilePath(){
 	num_of_files = nsfw ? NUM_OF_NSFW_FILES : NUM_OF_NOT_NSFW_FILES;
 	srand((unsigned) time(&t));
 	
-	char *filePath = (char *)malloc(MAX_FILE_PATH*sizeof(char));
-	strcat(filePath, "/home/vukasin/Desktop/Booba/");
+	char *filePath = (char *)malloc(MAX_FILE_PATH * sizeof(char));
+	strcat(filePath, "/home/vukasin/Desktop/Booba/art/");
 	sprintf(filePath+strlen(filePath), "%d", (rand() % num_of_files)+1);
 	sprintf(filePath+strlen(filePath), "%c", nsfw ? '!' : '_');
 	strcat(filePath, ".txt");
@@ -49,10 +49,10 @@ int main(){
 	FILE *file = fopen(filePath, "r");
 	check_error(file != NULL, "fopen");
 		
-	char **booba = (char **)malloc(MAX_HEIGHT*sizeof(char*));
+	char **booba = (char **)malloc(MAX_HEIGHT * sizeof(char*));
 	check_error(booba != NULL, "malloc");
 	for(i=0; i<MAX_WIDTH; i++){
-		booba[i] = (char *)malloc(MAX_WIDTH*sizeof(char));
+		booba[i] = (char *)malloc(MAX_WIDTH * sizeof(char));
 		check_error(booba[i] != NULL, "malloc");
 	}
 
@@ -68,6 +68,10 @@ int main(){
 			break;
 		printf("%s", booba[i]);
 	}
+	
+	for(i=0; i<MAX_WIDTH; i++)
+		free(booba[i]);
+	free(booba);
 
 	return 0;
 }
