@@ -1,5 +1,7 @@
-// export PATH="/home/vukasin/Desktop/Booba:$PATH"
-// exec Booba&
+/* 		export PATH="/home/vukasin/Desktop/Booba:$PATH"
+* 		Booba
+* 		echo -e ""
+*/
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -10,8 +12,9 @@
 
 #define MAX_WIDTH 100
 #define MAX_HEIGHT 200
-#define MAX_FILE_PATH 50
-#define NUM_OF_NSFW_FILES 6
+#define MAX_FILE_PATH 128
+
+#define NUM_OF_NSFW_FILES 13
 #define NUM_OF_NOT_NSFW_FILES 2
 
 #define check_error(cond, userMsg)\
@@ -23,14 +26,14 @@
 		}\
 	}while(0)
 	
-bool nsfw = false;
+bool nsfw = true;
 int num_of_files = 0;
 
 char *getFilePath(){
 	time_t t;
 	
 	num_of_files = nsfw ? NUM_OF_NSFW_FILES : NUM_OF_NOT_NSFW_FILES;
-	srand((unsigned) time(&t));
+	srand((unsigned)time(&t));
 	
 	char *filePath = (char *)malloc(MAX_FILE_PATH * sizeof(char));
 	strcat(filePath, "/home/vukasin/Desktop/Booba/art/");
@@ -49,10 +52,10 @@ int main(){
 	FILE *file = fopen(filePath, "r");
 	check_error(file != NULL, "fopen");
 		
-	char **booba = (char **)malloc(MAX_HEIGHT * sizeof(char*));
+	char **booba = (char**)malloc(MAX_HEIGHT * sizeof(char*));
 	check_error(booba != NULL, "malloc");
 	for(i=0; i<MAX_WIDTH; i++){
-		booba[i] = (char *)malloc(MAX_WIDTH * sizeof(char));
+		booba[i] = (char*)malloc(MAX_WIDTH * sizeof(char));
 		check_error(booba[i] != NULL, "malloc");
 	}
 
@@ -61,7 +64,7 @@ int main(){
 		i++;
 	}
 
-	check_error(fclose(file) == 0, "flose");
+	check_error(fclose(file) == 0, "fclose");
 	
 	for(i=0; i<MAX_HEIGHT; i++){
 		if(booba[i] == NULL)
@@ -69,9 +72,10 @@ int main(){
 		printf("%s", booba[i]);
 	}
 	
-	for(i=0; i<MAX_WIDTH; i++)
+	for(i=0; i<MAX_HEIGHT; i++)
 		free(booba[i]);
 	free(booba);
+	free(filePath);
 
 	return 0;
 }

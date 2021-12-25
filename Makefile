@@ -1,4 +1,4 @@
 
 
-Booba: app.c
+booba: app.c
 	gcc -Wall -o $@ $^
