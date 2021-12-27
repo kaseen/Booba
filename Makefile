@@ -1,4 +1,2 @@
-
-
-booba: app.c
-	gcc -Wall -o $@ $^
+booba: app.c getASCII.c getAnimation.c
+	gcc -Wall -o $@ $^ -lncursesw
