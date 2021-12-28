@@ -10,26 +10,9 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#include<unistd.h>
 #include<string.h>
-#include<time.h>
-#include<stdbool.h>
-
-#include<curses.h>
-#include<locale.h>
-#include<sys/types.h>
 
 #include "getASCII.h"
-#include "getAnimation.h"
-
-#define MAX_WIDTH 256
-#define MAX_HEIGHT 256
-#define MAX_FILE_PATH 128
-
-#define NUM_OF_NSFW_FILES 13
-#define NUM_OF_NOT_NSFW_FILES 2
-
-#define UTIME 150000
 
 #define check_error(cond, userMsg)\
 	do{\
@@ -40,27 +23,26 @@
 		}\
 	}while(0)
 
-bool nsfw = true;
+bool nsfw = false;
 int num_of_files = 0;
+int state = 0;
 
+// TODO: enum State {ASCII = 0, Animation = 1}; 
+// enum State state = 0;
+
+// brise se kad se ubaci enum
+#define Animation (1)
+#define ASCII (0)
 
 int main(int argc, char **argv){
 
-
-	if(argc == 1)
+	if(argc == 1){
+		state = ASCII;
 		getASCII();
-	else
+	}else if(strcmp(argv[1], "shake") == 0){
+		state = Animation;
 		getAnimation();
+	}
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
