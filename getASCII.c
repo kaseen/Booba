@@ -21,7 +21,14 @@ char *getFilePath(){
 			break;
 	}
 
-	strcat(filePath, "/home/vukasin/Desktop/booba/art/");
+	// EXIT_FAILURE if num_of_files is 0
+	check_error(num_of_files > 0, "no file to load");
+
+	// Set filePath to current dir ../booba
+	getcwd(filePath, MAX_FILE_PATH);
+
+	// FilePath is ../booba/art/
+	strcat(filePath, "/art/");
 	if(state == 1)
 		sprintf(filePath+strlen(filePath), "%c", 'a');
 	sprintf(filePath+strlen(filePath), "%d", (rand() % num_of_files)+1);
@@ -61,20 +68,21 @@ void getAnimation(){
 	int num_of_rows = -1;
 	int num_of_frames = -1;
 
+	char *filePath = getFilePath();
+	FILE *file = fopen(filePath, "r");
+
 	setlocale(LC_ALL,"");		// -lncursesw
 	initscr();
 	curs_set(0); 				//	remove cursor
-	
-	char *filePath = getFilePath();
-	FILE *file = fopen(filePath, "r");
+
 	char **booba = mallocBooba();
 
 	// Read first line of file to get num_of_rows and num_of_frames
 	fgets(booba[0], MAX_WIDTH, file);
 	sscanf(booba[0], "%d %d", &num_of_rows, &num_of_frames);
 
-	check_error(num_of_rows > 0, "");
-	check_error(num_of_frames > 0, "");
+	check_error(num_of_rows > 0, "number of rows not valid");
+	check_error(num_of_frames > 0, "number of frames not valid");
 
 	// Remembering second line of file to be start offset for looping
 	long start = ftell(file);
