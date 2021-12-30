@@ -23,18 +23,34 @@
 		}\
 	}while(0)
 
-bool nsfw = false;
-int num_of_files = 0;
-int state = 0;
+#define seconds_to_useconds(x) ((useconds_t)(x*1000000))
+
+#define ASCII (0)
+#define Animation (1)
 
 // TODO: enum State {ASCII = 0, Animation = 1}; 
 // enum State state = 0;
 
-// brise se kad se ubaci enum
-#define Animation (1)
-#define ASCII (0)
+bool nsfw;
+int state;
+useconds_t fps;
+
+void config(){
+	FILE *conf = fopen("config", "r");
+	check_error(conf != NULL, "fopen");
+
+	int tmp;
+	float tmp2;
+	fscanf(conf, "%d %f", &tmp, &tmp2);
+	nsfw = (bool)tmp;
+	fps = seconds_to_useconds(tmp2);
+
+	check_error(fclose(conf) == 0, "fclose");
+}
 
 int main(int argc, char **argv){
+
+	config();
 
 	if(argc == 1){
 		state = ASCII;

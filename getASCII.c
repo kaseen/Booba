@@ -1,11 +1,6 @@
 #define _XOPEN_SOURCE_EXTENDED		// for -lncursesw
 
 #include "getASCII.h"
-	
-extern bool nsfw;
-extern int num_of_files;
-extern int state;
-// TODO: extern enum state;
 
 char *getFilePath(){
 	time_t t;
@@ -92,7 +87,7 @@ void getAnimation(){
 		move(0,0);
 		getFrame(booba, file, num_of_rows);
 		refresh();
-		usleep(UTIME);
+		check_error(usleep(fps) != -1, "usleep");
 		i++;
 		if(i == num_of_frames){
 			i = 0;

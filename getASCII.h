@@ -33,6 +33,12 @@
 		}\
 	}while(0)
 
+extern bool nsfw;
+extern int state;
+extern useconds_t fps;
+// TODO: extern enum state;
+int num_of_files;
+
 char *getFilePath();
 char **mallocBooba();
 void freeBooba(char**);
