@@ -19,10 +19,11 @@ char *getFilePath(){
 	// EXIT_FAILURE if num_of_files is 0
 	check_error(num_of_files > 0, "no file to load");
 
-	// Set filePath to current dir ../booba
-	getcwd(filePath, MAX_FILE_PATH);
+	// Set filePath to current dir ../Booba/
+	//getcwd(filePath, MAX_FILE_PATH);
+	strcpy(filePath, dirPath);
 
-	// FilePath is ../booba/art/
+	// FilePath is ../Booba/art/
 	strcat(filePath, "/art/");
 	if(state == 1)
 		sprintf(filePath+strlen(filePath), "%c", 'a');

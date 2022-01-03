@@ -35,6 +35,7 @@
 
 extern bool nsfw;
 extern int state;
+extern char *dirPath;
 extern useconds_t fps;
 // TODO: extern enum state;
 int num_of_files;

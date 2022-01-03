@@ -1,7 +1,7 @@
 /*		sudo apt-get install libncurses5-dev
 *
 * 		export PATH="/home/vukasin/Desktop/Booba:$PATH"
-* 		Booba
+* 		booba
 * 		echo -e ""
 *
 */
@@ -24,31 +24,44 @@
 	}while(0)
 
 #define seconds_to_useconds(x) ((useconds_t)(x*1000000))
+#define MAX_FILE_PATH 128
 
 #define ASCII (0)
 #define Animation (1)
+//#define Install (2)
 
 // TODO: enum State {ASCII = 0, Animation = 1}; 
 // enum State state = 0;
 
 bool nsfw;
 int state;
+char *dirPath;
 useconds_t fps;
 
 void config(){
 	FILE *conf = fopen("config", "r");
 	check_error(conf != NULL, "fopen");
-
+	
+	// Reads first line of config
+	fgets(dirPath, MAX_FILE_PATH, conf);
+	
 	int tmp;
 	float tmp2;
-	fscanf(conf, "%d %f", &tmp, &tmp2);
+	sscanf(dirPath, "%d %f", &tmp, &tmp2);
 	nsfw = (bool)tmp;
 	fps = seconds_to_useconds(tmp2);
+	
+	// Reads second line of config
+	fgets(dirPath, MAX_FILE_PATH, conf);
+	// Remove '\n' from path
+	dirPath[strlen(dirPath)-1] = 0;
 
 	check_error(fclose(conf) == 0, "fclose");
 }
 
 int main(int argc, char **argv){
+
+	dirPath = (char*)malloc(MAX_FILE_PATH*sizeof(char));
 
 	config();
 
@@ -58,7 +71,9 @@ int main(int argc, char **argv){
 	}else if(strcmp(argv[1], "shake") == 0){
 		state = Animation;
 		getAnimation();
-	}
+	}/*else if(strcmp(argv[1], "install") == 0){
+	
+	}*/
 
 	return 0;
 }
