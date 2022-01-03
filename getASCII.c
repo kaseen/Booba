@@ -20,7 +20,6 @@ char *getFilePath(){
 	check_error(num_of_files > 0, "no file to load");
 
 	// Set filePath to current dir ../Booba/
-	//getcwd(filePath, MAX_FILE_PATH);
 	strcpy(filePath, dirPath);
 
 	// FilePath is ../Booba/art/
@@ -28,7 +27,7 @@ char *getFilePath(){
 	if(state == 1)
 		sprintf(filePath+strlen(filePath), "%c", 'a');
 	sprintf(filePath+strlen(filePath), "%d", (rand() % num_of_files)+1);
-	sprintf(filePath+strlen(filePath), "%c", nsfw ? '!' : '_'); 					// pametnije nesto
+	sprintf(filePath+strlen(filePath), "%c", nsfw ? '!' : '_');
 	strcat(filePath, ".txt");
 
 	return filePath;

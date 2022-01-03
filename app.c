@@ -1,6 +1,7 @@
 /*		sudo apt-get install libncurses5-dev
 *
-* 		export PATH="/home/vukasin/Desktop/Booba:$PATH"
+*		add config = /home/USER
+* 		export PATH="/home/USER/Desktop/Booba:$PATH"
 * 		booba
 * 		echo -e ""
 *
@@ -28,7 +29,6 @@
 
 #define ASCII (0)
 #define Animation (1)
-//#define Install (2)
 
 // TODO: enum State {ASCII = 0, Animation = 1}; 
 // enum State state = 0;
@@ -53,7 +53,7 @@ void config(){
 	
 	// Reads second line of config
 	fgets(dirPath, MAX_FILE_PATH, conf);
-	// Remove '\n' from path
+	// Remove '\n' from dirPath
 	dirPath[strlen(dirPath)-1] = 0;
 
 	check_error(fclose(conf) == 0, "fclose");
@@ -71,9 +71,7 @@ int main(int argc, char **argv){
 	}else if(strcmp(argv[1], "shake") == 0){
 		state = Animation;
 		getAnimation();
-	}/*else if(strcmp(argv[1], "install") == 0){
-	
-	}*/
+	}
 
 	return 0;
 }
