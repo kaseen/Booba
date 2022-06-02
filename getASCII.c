@@ -2,6 +2,8 @@
 
 #include "getASCII.h"
 
+int num_of_files;
+
 char *getFilePath(){
 	time_t t;
 	char *filePath = (char*)malloc(MAX_FILE_PATH * sizeof(char));

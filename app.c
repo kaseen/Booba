@@ -1,9 +1,11 @@
 /*		sudo apt-get install libncurses5-dev
 *
-*		add config = /home/USER
-* 		export PATH="/home/USER/Desktop/Booba:$PATH"
+*		1.) Add to config()
+*		FILE *conf = fopen(PATH_OF_CONF_FILE, "r");
+*
+* 		2.) export PATH="/home/USER/Desktop/Booba:$PATH"
+*		booba shake
 * 		booba
-* 		echo -e ""
 *
 */
 
@@ -39,17 +41,17 @@ char *dirPath;
 useconds_t fps;
 
 void config(){
-	FILE *conf = fopen("config", "r");
+	FILE *conf = fopen("/home/vukasin/Booba/config", "r");
 	check_error(conf != NULL, "fopen");
 	
 	// Reads first line of config
 	fgets(dirPath, MAX_FILE_PATH, conf);
 	
-	int tmp;
-	float tmp2;
-	sscanf(dirPath, "%d %f", &tmp, &tmp2);
-	nsfw = (bool)tmp;
-	fps = seconds_to_useconds(tmp2);
+	int readCfgNsfw;
+	float readCfgFps;
+	sscanf(dirPath, "%d %f", &readCfgNsfw, &readCfgFps);
+	nsfw = (bool)readCfgNsfw;
+	fps = seconds_to_useconds(readCfgFps);
 	
 	// Reads second line of config
 	fgets(dirPath, MAX_FILE_PATH, conf);
