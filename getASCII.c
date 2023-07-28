@@ -1,7 +1,9 @@
 #define _XOPEN_SOURCE_EXTENDED		// for -lncursesw
 
 #include "getASCII.h"
+#include "config.h"
 
+// TODO: premesti u header
 int num_of_files;
 
 char *getFilePath(){
@@ -11,10 +13,10 @@ char *getFilePath(){
 
 	switch(state){
 		case 0:
-			num_of_files = nsfw ? NUM_OF_NSFW_FILES : NUM_OF_NOT_NSFW_FILES;
+			num_of_files = __NSFW__ ? NUM_OF_NSFW_FILES : NUM_OF_NOT_NSFW_FILES;
 			break;
 		case 1:
-			num_of_files = nsfw ? NUM_OF_NSFW_ANIMATION : NUM_OF_NOT_NSFW_ANIMATION;
+			num_of_files = __NSFW__ ? NUM_OF_NSFW_ANIMATION : NUM_OF_NOT_NSFW_ANIMATION;
 			break;
 	}
 
@@ -22,14 +24,14 @@ char *getFilePath(){
 	check_error(num_of_files > 0, "no file to load");
 
 	// Set filePath to current dir ../Booba/
-	strcpy(filePath, dirPath);
+	strcpy(filePath, __APP_ROOT_DIR__);
 
 	// FilePath is ../Booba/art/
 	strcat(filePath, "/art/");
 	if(state == 1)
 		sprintf(filePath+strlen(filePath), "%c", 'a');
 	sprintf(filePath+strlen(filePath), "%d", (rand() % num_of_files)+1);
-	sprintf(filePath+strlen(filePath), "%c", nsfw ? '!' : '_');
+	sprintf(filePath+strlen(filePath), "%c", __NSFW__ ? '!' : '_');
 	strcat(filePath, ".txt");
 
 	return filePath;

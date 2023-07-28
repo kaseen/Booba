@@ -16,6 +16,7 @@
 #include<string.h>
 
 #include "getASCII.h"
+#include "config.h"
 
 #define check_error(cond, userMsg)\
 	do{\
@@ -35,37 +36,15 @@
 // TODO: enum State {ASCII = 0, Animation = 1}; 
 // enum State state = 0;
 
-bool nsfw;
 int state;
 char *dirPath;
 useconds_t fps;
-
-void config(){
-	FILE *conf = fopen("/home/vukasin/Booba/config", "r");
-	check_error(conf != NULL, "fopen");
-	
-	// Reads first line of config
-	fgets(dirPath, MAX_FILE_PATH, conf);
-	
-	int readCfgNsfw;
-	float readCfgFps;
-	sscanf(dirPath, "%d %f", &readCfgNsfw, &readCfgFps);
-	nsfw = (bool)readCfgNsfw;
-	fps = seconds_to_useconds(readCfgFps);
-	
-	// Reads second line of config
-	fgets(dirPath, MAX_FILE_PATH, conf);
-	// Remove '\n' from dirPath
-	dirPath[strlen(dirPath)-1] = 0;
-
-	check_error(fclose(conf) == 0, "fclose");
-}
 
 int main(int argc, char **argv){
 
 	dirPath = (char*)malloc(MAX_FILE_PATH*sizeof(char));
 
-	config();
+	fps = seconds_to_useconds(__FPS__);
 
 	if(argc == 1){
 		state = ASCII;
